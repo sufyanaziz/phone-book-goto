@@ -63,8 +63,6 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
 
   const contactAggregate = useQuery(GET_COUNT_CONTACT);
 
-  console.log("data", data);
-
   return {
     data: data?.contact,
     loading,

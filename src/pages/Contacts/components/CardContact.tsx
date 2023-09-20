@@ -13,7 +13,6 @@ type TCardContact = {
 };
 
 const CardContact: React.FC<TCardContact> = ({ data }) => {
-  console.log("card", data);
   const cardContentStyle = (theme: Theme) => {
     return css({
       border: `1px solid black`,
