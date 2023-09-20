@@ -1,5 +1,8 @@
+import Header from "@common/components/Header";
 import { ContactProvider } from "@common/store/useContactStore";
 import { Theme, ThemeProvider } from "@emotion/react";
+import Contacts from "@pages/Contacts";
+import { Route, Routes } from "react-router-dom";
 import "@styles/index.css";
 
 const theme: Theme = {
@@ -19,7 +22,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <ContactProvider>
-        <p>Init</p>
+        <div className="app-phone-book">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Contacts />} />
+          </Routes>
+        </div>
       </ContactProvider>
     </ThemeProvider>
   );

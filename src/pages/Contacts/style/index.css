@@ -1,0 +1,8 @@
+.contact-page {
+  height: calc(100vh - 64px);
+}
+
+.contact-page-content {
+  height: 400px;
+  overflow-y: auto;
+}
