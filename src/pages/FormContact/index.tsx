@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import Container from "@common/components/Container";
-import HeaderTitle from "@common/components/HeaderTitle";
 
 const Form = React.lazy(() => import("./components/Form"));
 
@@ -24,10 +23,6 @@ const FormContact = () => {
           },
         }}
       >
-        <HeaderTitle
-          title="Form Contact"
-          css={{ display: "flex", justifyContent: "center" }}
-        />
         <Suspense fallback={<p>Loading...</p>}>
           <Form />
         </Suspense>
