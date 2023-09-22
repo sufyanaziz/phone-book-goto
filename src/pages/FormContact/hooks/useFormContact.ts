@@ -1,9 +1,20 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-import { ADD_NEW_CONTACT } from "@common/graphql/formContact";
+import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
+import { GET_CONTACT_DETAIL } from "@common/graphql/contact";
+import useRoute from "@common/utils/useRoute";
 
 const useFormContact = () => {
+  const { queryUrl } = useRoute();
   const [isSuccess, setIsSuccess] = useState(false);
+  const id = queryUrl.get("id");
+
+  const contactDetail = useQuery(GET_CONTACT_DETAIL, {
+    skip: id ? false : true,
+    variables: {
+      id: Number(id),
+    },
+  });
 
   const [insert_contact, { data, ...rest }] = useMutation(ADD_NEW_CONTACT, {
     onCompleted: () => {
@@ -11,13 +22,44 @@ const useFormContact = () => {
     },
   });
 
+  const [update_contact_by_pk, updateContact] = useMutation(EDIT_CONTACT, {
+    onCompleted: () => {
+      setIsSuccess(true);
+    },
+  });
+
   return {
-    addNewContact: insert_contact,
     result: {
       data,
       isSuccess,
-      loading: rest.loading,
-      error: rest.error,
+      loading: rest.loading || updateContact.loading,
+      error: rest.error || updateContact.error,
+    },
+    contact: {
+      data: contactDetail.data,
+      loading: contactDetail.loading,
+      error: contactDetail.error,
+      isHaveContact: !!contactDetail.data?.contact_by_pk,
+    },
+    onAddContact: (firstName: string, lastName: string, phones: string[]) => {
+      insert_contact({
+        variables: {
+          first_name: firstName,
+          last_name: lastName,
+          phones: phones.map((phone) => ({ number: phone })),
+        },
+      });
+    },
+    onEditContact: (firstName: string, lastName: string) => {
+      update_contact_by_pk({
+        variables: {
+          id: Number(id),
+          _set: {
+            first_name: firstName,
+            last_name: lastName,
+          },
+        },
+      });
     },
   };
 };

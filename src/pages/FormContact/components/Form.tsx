@@ -53,7 +53,7 @@ const Form = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumbers, setPhoneNumbers] = useState<string[]>([""]);
 
-  const { addNewContact, result } = useFormContact();
+  const { onAddContact, onEditContact, result, contact } = useFormContact();
 
   const isDisabled = useMemo(() => {
     if (result.loading) return true;
@@ -75,6 +75,18 @@ const Form = () => {
       resetState();
     }
   }, [result.isSuccess, result.loading]);
+
+  useEffect(() => {
+    if (contact.isHaveContact) {
+      const { contact_by_pk } = contact.data;
+      setFirstName(contact_by_pk?.first_name);
+      setLastName(contact_by_pk?.last_name);
+      setPhoneNumbers(
+        contact_by_pk?.phones?.map((phone: { number: string }) => phone.number)
+      );
+    }
+    return () => resetState();
+  }, [contact.data]);
 
   return (
     <div css={formContactStyle}>
@@ -125,43 +137,52 @@ const Form = () => {
                     setPhoneNumbers(phones);
                   }
                 }}
+                disabled={contact.isHaveContact}
               />
-              <div className="icons">
-                {phoneNumbers.length > 1 ? (
+              {!contact.isHaveContact ? (
+                <div className="icons">
+                  {phoneNumbers.length > 1 ? (
+                    <div
+                      className="minus-icon"
+                      onClick={() => {
+                        setPhoneNumbers(
+                          phoneNumbers.filter((_, idx) => idx !== listIdx)
+                        );
+                      }}
+                      css={{
+                        cursor: contact.isHaveContact ? "not-allowed" : "unset",
+                      }}
+                    >
+                      <MinusSquareIcon />
+                    </div>
+                  ) : null}
                   <div
-                    className="minus-icon"
+                    className="add-icon"
                     onClick={() => {
-                      setPhoneNumbers(
-                        phoneNumbers.filter((_, idx) => idx !== listIdx)
-                      );
+                      setPhoneNumbers((prev) => [...prev, ""]);
+                    }}
+                    css={{
+                      cursor: contact.isHaveContact ? "not-allowed" : "unset",
                     }}
                   >
-                    <MinusSquareIcon />
+                    <AddSquareIcon />
                   </div>
-                ) : null}
-                <div
-                  className="add-icon"
-                  onClick={() => setPhoneNumbers((prev) => [...prev, ""])}
-                >
-                  <AddSquareIcon />
                 </div>
-              </div>
+              ) : null}
             </div>
           );
         })}
       </div>
       <div css={{ marginTop: "16px", width: "100%" }}>
         <Button
-          label="Add Contact"
+          label={!contact.isHaveContact ? "Add Contact" : "Edit Contact"}
           disabled={isDisabled}
           onClick={() => {
-            addNewContact({
-              variables: {
-                first_name: firstName,
-                last_name: lastName,
-                phones: phoneNumbers.map((phone) => ({ number: phone })),
-              },
-            });
+            if (!contact.isHaveContact) {
+              onAddContact(firstName, lastName, phoneNumbers);
+            } else {
+              onEditContact(firstName, lastName);
+            }
           }}
         />
       </div>
