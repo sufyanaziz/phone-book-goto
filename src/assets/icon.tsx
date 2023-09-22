@@ -1,3 +1,5 @@
+import React from "react";
+
 export const MinusSquareIcon = ({
   color = "#435334",
   height = "24px",

@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component FormContact should render FormContact component correctly 1`] = `
+<div
+  css={[Function]}
+>
+  <div
+    css={[Function]}
+  >
+    <div
+      className=""
+      css={[Function]}
+    >
+      Form Contact
+    </div>
+  </div>
+  <div
+    className="field-input"
+  >
+    <div
+      className="input-container"
+    >
+      <div
+        className=""
+        css={[Function]}
+      >
+        First Name
+      </div>
+      <input
+        className="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Input First Name..."
+        value=""
+      />
+    </div>
+    <div
+      className="input-container"
+    >
+      <div
+        className=""
+        css={[Function]}
+      >
+        Last Name
+      </div>
+      <input
+        className="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Input Last Name..."
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    className="field-phone-numbers"
+  >
+    <div
+      className=""
+      css={[Function]}
+    >
+      Phone Numbers
+    </div>
+    <div
+      className="phone-container"
+    >
+      <input
+        className="input"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="Phone 1"
+        value=""
+      />
+      <div
+        className="icons"
+      >
+        <div
+          className="add-icon"
+          css={
+            {
+              "cursor": "unset",
+            }
+          }
+          onClick={[Function]}
+        >
+          <svg
+            fill="none"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="23px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 12H15"
+              stroke="#435334"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            />
+            <path
+              d="M12 9L12 15"
+              stroke="#435334"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            />
+            <path
+              d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
+              stroke="#435334"
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    css={
+      {
+        "marginTop": "16px",
+        "width": "100%",
+      }
+    }
+  >
+    <button
+      className="primary"
+      css={[Function]}
+      disabled={true}
+      onClick={[Function]}
+    >
+      Add Contact
+    </button>
+  </div>
+</div>
+`;

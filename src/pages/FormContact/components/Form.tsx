@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Text from "@common/components/Text";
 import { css } from "@emotion/react";
-import { AddSquareIcon, MinusSquareIcon } from "assets/icon";
+import { AddSquareIcon, MinusSquareIcon } from "@assets/icon";
 import Button from "@common/components/Button";
 import useFormContact from "../hooks/useFormContact";
 import Input from "@common/components/Input";
