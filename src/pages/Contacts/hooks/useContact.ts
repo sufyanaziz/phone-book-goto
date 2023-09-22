@@ -1,20 +1,13 @@
-import {
-  ApolloError,
-  useQuery,
-  useMutation,
-  MutationFunctionOptions,
-  OperationVariables,
-  DefaultContext,
-  ApolloCache,
-} from "@apollo/client";
+import { ApolloError, useQuery, useMutation } from "@apollo/client";
 import {
   DELETE_CONTACT,
   GET_CONTACT,
   GET_COUNT_CONTACT,
 } from "@common/graphql/contact";
+import { ADD_NEW_CONTACT } from "@common/graphql/formContact";
 import useDebounce from "@common/hooks/useDebounce";
 import { ContactStore } from "@common/store/useContactStore";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 type TUseContact = {
   limit: number;
@@ -32,25 +25,28 @@ type TDataContacts = {
   loading: boolean;
   error?: ApolloError;
   totalRow: number;
+  isComplete: boolean;
   refetchContact: () => void;
   refetchContactAggregate: () => void;
   deleteContact: {
-    delete_contact_by_pk: (
-      options?:
-        | MutationFunctionOptions<
-            any,
-            OperationVariables,
-            DefaultContext,
-            ApolloCache<any>
-          >
-        | undefined
-    ) => Promise<any>;
+    onDeleteContact: (id: number) => void;
     data: any;
     loading: boolean;
+  };
+  addContact: {
+    onAddNewContact: (
+      firstName: string,
+      lastName: string,
+      phones: string[]
+    ) => void;
+    data: any;
+    loading: boolean;
+    resetState: () => void;
   };
 };
 
 const useContact = ({ limit }: TUseContact): TDataContacts => {
+  const [isComplete, setIsComplete] = useState<boolean>(false);
   const { search, offset } = useContext(ContactStore);
 
   const debounceSearch = useDebounce(search, 800);
@@ -73,17 +69,47 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
     refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
   });
 
+  const [insert_contact, addNewContact] = useMutation(ADD_NEW_CONTACT, {
+    refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+    onCompleted: () => {
+      setIsComplete(true);
+    },
+  });
+
   return {
     data: data?.contact,
     loading,
     error,
+    isComplete,
     totalRow: contactAggregate.data?.contact_aggregate?.aggregate?.count || 0,
     refetchContact: refetch,
     refetchContactAggregate: contactAggregate.refetch,
     deleteContact: {
-      delete_contact_by_pk,
+      onDeleteContact: (id: number) => {
+        delete_contact_by_pk({
+          variables: {
+            id,
+          },
+        });
+      },
       data: deleteContact.data,
       loading: deleteContact.loading,
+    },
+    addContact: {
+      onAddNewContact: (firstName, lastName, phones) => {
+        insert_contact({
+          variables: {
+            first_name: firstName,
+            last_name: lastName,
+            phones: phones.map((phone) => ({ number: phone })),
+          },
+        });
+      },
+      data: addNewContact.data,
+      loading: addNewContact.loading,
+      resetState: () => {
+        setIsComplete(false);
+      },
     },
   };
 };
