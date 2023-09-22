@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component CardContact should render CardContact component correctly 1`] = `
+<div
+  css={[Function]}
+>
+  <div
+    className="card-content-info"
+  >
+    <div
+      className=""
+      css={[Function]}
+    >
+      dummy first name dummy last name
+    </div>
+    <div
+      className=""
+      css={[Function]}
+    >
+      8767322
+    </div>
+  </div>
+  <div
+    className="card-content-action"
+  >
+    <button
+      className="default"
+      css={[Function]}
+      onClick={[Function]}
+    >
+      Detail
+    </button>
+    <button
+      className="warning"
+      css={[Function]}
+      onClick={[Function]}
+    >
+      Edit
+    </button>
+    <button
+      className="important"
+      css={[Function]}
+      onClick={[Function]}
+    >
+      Delete
+    </button>
+  </div>
+</div>
+`;

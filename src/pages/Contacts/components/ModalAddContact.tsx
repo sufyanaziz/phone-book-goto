@@ -5,7 +5,7 @@ import { MODAL_NAME } from "../constant/modal";
 import Text from "@common/components/Text";
 import { css } from "@emotion/react";
 import Input from "@common/components/Input";
-import { AddSquareIcon, MinusSquareIcon } from "assets/icon";
+import { AddSquareIcon, MinusSquareIcon } from "@assets/icon";
 import Button from "@common/components/Button";
 
 type TModalAddContact = {

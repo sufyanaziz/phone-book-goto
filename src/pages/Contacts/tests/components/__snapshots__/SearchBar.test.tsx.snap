@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component SearchBar should render SearchBar component correctly 1`] = `
+<div
+  css={[Function]}
+>
+  <input
+    className="input"
+    onChange={[Function]}
+    placeholder="Find Contact"
+    value=""
+  />
+  <div>
+    <button
+      className="primary"
+      css={[Function]}
+      onClick={[Function]}
+    >
+      Add New Contact
+    </button>
+  </div>
+</div>
+`;
