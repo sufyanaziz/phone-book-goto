@@ -4,7 +4,7 @@ import {
   GET_CONTACT,
   GET_COUNT_CONTACT,
 } from "@common/graphql/contact";
-import { ADD_NEW_CONTACT } from "@common/graphql/formContact";
+import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
 import useDebounce from "@common/hooks/useDebounce";
 import { ContactStore } from "@common/store/useContactStore";
 import { useContext, useState } from "react";
@@ -41,8 +41,13 @@ type TDataContacts = {
     ) => void;
     data: any;
     loading: boolean;
-    resetState: () => void;
   };
+  editContact: {
+    onEditContact: (id: number, firstName: string, lastName: string) => void;
+    data: any;
+    loading: boolean;
+  };
+  resetState: () => void;
 };
 
 const useContact = ({ limit }: TUseContact): TDataContacts => {
@@ -71,6 +76,12 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
 
   const [insert_contact, addNewContact] = useMutation(ADD_NEW_CONTACT, {
     refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+    onCompleted: () => {
+      setIsComplete(true);
+    },
+  });
+
+  const [update_contact_by_pk, updateContact] = useMutation(EDIT_CONTACT, {
     onCompleted: () => {
       setIsComplete(true);
     },
@@ -107,9 +118,24 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
       },
       data: addNewContact.data,
       loading: addNewContact.loading,
-      resetState: () => {
-        setIsComplete(false);
+    },
+    editContact: {
+      onEditContact: (id: number, firstName: string, lastName: string) => {
+        update_contact_by_pk({
+          variables: {
+            id: Number(id),
+            _set: {
+              first_name: firstName,
+              last_name: lastName,
+            },
+          },
+        });
       },
+      data: updateContact.data,
+      loading: updateContact.loading,
+    },
+    resetState: () => {
+      setIsComplete(false);
     },
   };
 };

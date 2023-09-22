@@ -6,6 +6,7 @@ import { AddSquareIcon, MinusSquareIcon } from "assets/icon";
 import Button from "@common/components/Button";
 import useFormContact from "../hooks/useFormContact";
 import Input from "@common/components/Input";
+import HeaderTitle from "@common/components/HeaderTitle";
 
 const formContactStyle = () => {
   return css({
@@ -91,6 +92,10 @@ const Form = () => {
 
   return (
     <div css={formContactStyle}>
+      <HeaderTitle
+        title={contact.isHaveContact ? "Edit Form Contact" : "Form Contact"}
+        css={{ display: "flex", justifyContent: "center" }}
+      />
       <div className="field-input">
         <div className="input-container">
           <Text text="First Name" />

@@ -11,6 +11,7 @@ import { ContactStore } from "@common/store/useContactStore";
 import { useNavigate } from "react-router-dom";
 import ModalDetail from "./components/ModalDetail";
 import ModalAddContact from "./components/ModalAddContact";
+import ModalEditContact from "./components/ModalEditContact";
 import "./style/index.css";
 
 const LIMIT = 10;
@@ -102,7 +103,13 @@ const Contacts = () => {
       <ModalAddContact
         loading={rest.addContact.loading}
         onAddNewContact={rest.addContact.onAddNewContact}
-        onClose={rest.addContact.resetState}
+        onClose={rest.resetState}
+        isComplete={rest.isComplete}
+      />
+      <ModalEditContact
+        loading={rest.editContact.loading}
+        onEditContact={rest.editContact.onEditContact}
+        onClose={rest.resetState}
         isComplete={rest.isComplete}
       />
     </div>
