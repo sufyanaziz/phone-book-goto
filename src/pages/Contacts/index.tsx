@@ -9,13 +9,14 @@ import HeaderTitle from "@common/components/HeaderTitle";
 import SearchBar from "./components/SearchBar";
 import { ContactStore } from "@common/store/useContactStore";
 import { useNavigate } from "react-router-dom";
+import ModalDetail from "./components/ModalDetail";
 import "./style/index.css";
 
 const LIMIT = 10;
 
 const Contacts = () => {
   const navigate = useNavigate();
-  const { offset, onSetOffset, onSetContact } = useContext(ContactStore);
+  const { offset, onSetOffset, openModal } = useContext(ContactStore);
   const { data, loading, totalRow, ...rest } = useContact({ limit: LIMIT });
 
   const pagination = useMemo(() => {
@@ -54,7 +55,9 @@ const Contacts = () => {
               });
             }
           }}
-          onDetail={onSetContact}
+          onDetail={(contact) => {
+            openModal("modal-detail-contact", contact);
+          }}
         />
       );
     });
@@ -98,6 +101,7 @@ const Contacts = () => {
           </div>
         </div>
       </Container>
+      <ModalDetail />
     </div>
   );
 };
