@@ -3,16 +3,21 @@ import { Theme, css } from "@emotion/react";
 import Text from "@common/components/Text";
 import Button from "@common/components/Button";
 
-type TCardContact = {
-  data: {
-    id: number;
-    first_name: string;
-    last_name: string;
-    phones: { number: string }[];
-  };
+type TCardContactData = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  phones: { number: string }[];
 };
 
-const CardContact: React.FC<TCardContact> = ({ data }) => {
+type TCardContact = {
+  data: TCardContactData;
+  onDelete: (data: TCardContactData) => void;
+  onDetail: (data: TCardContactData) => void;
+  onEdit: (data: TCardContactData) => void;
+};
+
+const CardContact: React.FC<TCardContact> = ({ data, ...rest }) => {
   const cardContentStyle = (theme: Theme) => {
     return css({
       border: `1px solid black`,
@@ -38,9 +43,17 @@ const CardContact: React.FC<TCardContact> = ({ data }) => {
         <Text text={data.phones[0].number} />
       </div>
       <div className="card-content-action">
-        <Button label="Detail" type="default" />
-        <Button label="Edit" type="warning" />
-        <Button label="Delete" type="important" />
+        <Button
+          label="Detail"
+          type="default"
+          onClick={() => rest.onDetail(data)}
+        />
+        <Button label="Edit" type="warning" onClick={() => rest.onEdit(data)} />
+        <Button
+          label="Delete"
+          type="important"
+          onClick={() => rest.onDelete(data)}
+        />
       </div>
     </div>
   );

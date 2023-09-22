@@ -30,10 +30,7 @@ const SearchBar = () => {
         placeholder="Find Contact"
       />
       <div>
-        <Button
-          label="Add New Contact"
-          onClick={() => navigate("/add-contact")}
-        />
+        <Button label="Add New Contact" onClick={() => navigate("/form")} />
       </div>
     </div>
   );

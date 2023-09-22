@@ -1,30 +1,20 @@
-import { ApolloError, gql, useQuery } from "@apollo/client";
+import {
+  ApolloError,
+  useQuery,
+  useMutation,
+  MutationFunctionOptions,
+  OperationVariables,
+  DefaultContext,
+  ApolloCache,
+} from "@apollo/client";
+import {
+  DELETE_CONTACT,
+  GET_CONTACT,
+  GET_COUNT_CONTACT,
+} from "@common/graphql/contact";
 import useDebounce from "@common/hooks/useDebounce";
 import { ContactStore } from "@common/store/useContactStore";
 import { useContext } from "react";
-
-const GET_CONTACT = gql`
-  query GetContact($limit: Int, $offset: Int, $where: contact_bool_exp) {
-    contact(limit: $limit, offset: $offset, where: $where) {
-      id
-      first_name
-      last_name
-      phones {
-        number
-      }
-    }
-  }
-`;
-
-const GET_COUNT_CONTACT = gql`
-  query {
-    contact_aggregate {
-      aggregate {
-        count
-      }
-    }
-  }
-`;
 
 type TUseContact = {
   limit: number;
@@ -35,13 +25,29 @@ type TDataContacts = {
     | {
         id: number;
         first_name: string;
-        lastName: string;
+        last_name: string;
         phones: { number: string }[];
       }[]
     | undefined;
   loading: boolean;
   error?: ApolloError;
   totalRow: number;
+  refetchContact: () => void;
+  refetchContactAggregate: () => void;
+  deleteContact: {
+    delete_contact_by_pk: (
+      options?:
+        | MutationFunctionOptions<
+            any,
+            OperationVariables,
+            DefaultContext,
+            ApolloCache<any>
+          >
+        | undefined
+    ) => Promise<any>;
+    data: any;
+    loading: boolean;
+  };
 };
 
 const useContact = ({ limit }: TUseContact): TDataContacts => {
@@ -49,7 +55,7 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
 
   const debounceSearch = useDebounce(search, 800);
 
-  const { data, loading, error } = useQuery(GET_CONTACT, {
+  const { data, loading, error, refetch } = useQuery(GET_CONTACT, {
     variables: {
       limit,
       offset,
@@ -63,11 +69,22 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
 
   const contactAggregate = useQuery(GET_COUNT_CONTACT);
 
+  const [delete_contact_by_pk, deleteContact] = useMutation(DELETE_CONTACT, {
+    refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+  });
+
   return {
     data: data?.contact,
     loading,
     error,
     totalRow: contactAggregate.data?.contact_aggregate?.aggregate?.count || 0,
+    refetchContact: refetch,
+    refetchContactAggregate: contactAggregate.refetch,
+    deleteContact: {
+      delete_contact_by_pk,
+      data: deleteContact.data,
+      loading: deleteContact.loading,
+    },
   };
 };
 
