@@ -10,6 +10,7 @@ import SearchBar from "./components/SearchBar";
 import { ContactStore } from "@common/store/useContactStore";
 import { useNavigate } from "react-router-dom";
 import ModalDetail from "./components/ModalDetail";
+import ModalAddContact from "./components/ModalAddContact";
 import "./style/index.css";
 
 const LIMIT = 10;
@@ -48,11 +49,7 @@ const Contacts = () => {
           onDelete={(data) => {
             const confirm = window.confirm(`delete ${data.first_name}`);
             if (confirm) {
-              rest.deleteContact.delete_contact_by_pk({
-                variables: {
-                  id: data.id,
-                },
-              });
+              rest.deleteContact.onDeleteContact(data.id);
             }
           }}
           onDetail={(contact) => {
@@ -102,6 +99,12 @@ const Contacts = () => {
         </div>
       </Container>
       <ModalDetail />
+      <ModalAddContact
+        loading={rest.addContact.loading}
+        onAddNewContact={rest.addContact.onAddNewContact}
+        onClose={rest.addContact.resetState}
+        isComplete={rest.isComplete}
+      />
     </div>
   );
 };

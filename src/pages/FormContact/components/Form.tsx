@@ -5,6 +5,7 @@ import { css } from "@emotion/react";
 import { AddSquareIcon, MinusSquareIcon } from "assets/icon";
 import Button from "@common/components/Button";
 import useFormContact from "../hooks/useFormContact";
+import Input from "@common/components/Input";
 
 const formContactStyle = () => {
   return css({
@@ -93,30 +94,22 @@ const Form = () => {
       <div className="field-input">
         <div className="input-container">
           <Text text="First Name" />
-          <input
+          <Input
             className="input"
             placeholder="Input First Name..."
+            acceptValue="string-number"
             value={firstName}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\s\s/g, " ");
-              if (/^(?![\s])[\w\s]*$/.test(value)) {
-                setFirstName(value);
-              }
-            }}
+            onChange={setFirstName}
           />
         </div>
         <div className="input-container">
           <Text text="Last Name" />
-          <input
+          <Input
             className="input"
             placeholder="Input Last Name..."
+            acceptValue="string-number"
             value={lastName}
-            onChange={(e) => {
-              const value = e.target.value.replace(/\s\s/g, " ");
-              if (/^(?![\s])[\w\s]*$/.test(value)) {
-                setLastName(value);
-              }
-            }}
+            onChange={setLastName}
           />
         </div>
       </div>
@@ -125,17 +118,15 @@ const Form = () => {
         {phoneNumbers.map((phone, listIdx) => {
           return (
             <div className="phone-container" key={`phone-${listIdx}`}>
-              <input
+              <Input
                 className="input"
                 placeholder={`Phone ${listIdx + 1}`}
                 value={phone}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (/^[\d]*$/.test(value)) {
-                    const phones = [...phoneNumbers];
-                    phones[listIdx] = value;
-                    setPhoneNumbers(phones);
-                  }
+                acceptValue="number-only"
+                onChange={(value) => {
+                  const phones = [...phoneNumbers];
+                  phones[listIdx] = value;
+                  setPhoneNumbers(phones);
                 }}
                 disabled={contact.isHaveContact}
               />
