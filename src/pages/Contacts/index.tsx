@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import ModalDetail from "./components/ModalDetail";
 import ModalAddContact from "./components/ModalAddContact";
 import ModalEditContact from "./components/ModalEditContact";
+import Message from "@common/components/Message";
 import "./style/index.css";
 
 const LIMIT = 10;
@@ -66,6 +67,7 @@ const Contacts = () => {
       <Container>
         <HeaderTitle title="Contact List" />
         <SearchBar />
+        <Message />
         <div className="contact-page-content" css={{ marginBottom: 12 }}>
           {renderData()}
         </div>
