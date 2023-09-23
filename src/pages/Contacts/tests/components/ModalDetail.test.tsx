@@ -20,7 +20,7 @@ describe("Component ModalDetail", () => {
           },
         }}
       >
-        <ModalDetail />
+        <ModalDetail onAddNewNumber={jest.fn()} onEditPhoneNumber={jest.fn()} />
       </ContactStore.Provider>
     );
     expect(component).toMatchSnapshot();
