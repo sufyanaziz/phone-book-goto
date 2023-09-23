@@ -1,0 +1,15 @@
+{
+  "css.validate": false,
+  "scss.validate": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "editor.rulers": [120],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "eslint.format.enable": true
+}
