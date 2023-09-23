@@ -17,9 +17,11 @@ const Button: React.FC<TButton> = ({ label, onClick, disabled, type }) => {
       borderRadius: "4px",
       width: "100%",
       height: "100%",
+      cursor: "pointer",
       "&:disabled": {
         background: "#B4B4B3 !important",
         color: "white !important",
+        cursor: "not-allowed",
       },
       "&.primary": {
         background: theme.colors.primaryColor,

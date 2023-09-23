@@ -51,6 +51,9 @@ const Modal: React.FC<TModal> = ({
           borderBottom: `1px solid ${theme.colors.primaryColor}`,
           justifyContent: "space-between",
           alignItems: "center",
+          ".close-icon": {
+            cursor: "pointer",
+          },
         },
 
         ".content": {
