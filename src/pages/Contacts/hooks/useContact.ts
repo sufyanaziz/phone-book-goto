@@ -7,6 +7,7 @@ import {
 import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
 import useDebounce from "@common/hooks/useDebounce";
 import { ContactStore } from "@common/store/useContactStore";
+import { MessageStore } from "@common/store/useMessageStore";
 import { useContext, useState } from "react";
 
 type TUseContact = {
@@ -53,6 +54,7 @@ type TDataContacts = {
 const useContact = ({ limit }: TUseContact): TDataContacts => {
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const { search, offset } = useContext(ContactStore);
+  const { setShowMessage } = useContext(MessageStore);
 
   const debounceSearch = useDebounce(search, 800);
 
@@ -72,18 +74,25 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
 
   const [delete_contact_by_pk, deleteContact] = useMutation(DELETE_CONTACT, {
     refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+    onCompleted: () => {
+      setIsComplete(true);
+      setShowMessage("successRemoveContact", true);
+    },
   });
 
   const [insert_contact, addNewContact] = useMutation(ADD_NEW_CONTACT, {
     refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
     onCompleted: () => {
       setIsComplete(true);
+      setShowMessage("successAddContact", true);
     },
   });
 
   const [update_contact_by_pk, updateContact] = useMutation(EDIT_CONTACT, {
+    refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
     onCompleted: () => {
       setIsComplete(true);
+      setShowMessage("successEditContact", true);
     },
   });
 

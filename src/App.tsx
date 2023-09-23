@@ -4,6 +4,7 @@ import { Theme, ThemeProvider } from "@emotion/react";
 import Contacts from "@pages/Contacts";
 import { Route, Routes } from "react-router-dom";
 import FormContact from "@pages/FormContact";
+import { MessageProvider } from "@common/store/useMessageStore";
 import "@styles/index.css";
 
 const theme: Theme = {
@@ -22,15 +23,17 @@ const theme: Theme = {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ContactProvider>
-        <div className="app-phone-book">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Contacts />} />
-            <Route path="/form" element={<FormContact />} />
-          </Routes>
-        </div>
-      </ContactProvider>
+      <MessageProvider>
+        <ContactProvider>
+          <div className="app-phone-book">
+            <Header />
+            <Routes>
+              <Route path="/" element={<Contacts />} />
+              <Route path="/form" element={<FormContact />} />
+            </Routes>
+          </div>
+        </ContactProvider>
+      </MessageProvider>
     </ThemeProvider>
   );
 }
