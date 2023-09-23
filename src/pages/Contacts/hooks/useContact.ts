@@ -5,6 +5,10 @@ import {
   GET_COUNT_CONTACT,
 } from "@common/graphql/contact";
 import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
+import {
+  ADD_NUMBER_TO_CONTACT,
+  EDIT_PHONE_NUMBER,
+} from "@common/graphql/number";
 import useDebounce from "@common/hooks/useDebounce";
 import { ContactStore } from "@common/store/useContactStore";
 import { MessageStore } from "@common/store/useMessageStore";
@@ -45,6 +49,19 @@ type TDataContacts = {
   };
   editContact: {
     onEditContact: (id: number, firstName: string, lastName: string) => void;
+    data: any;
+    loading: boolean;
+  };
+  addNewNumber: {
+    onAddNewNumber: (id: number, number: string) => void;
+    data: any;
+    loading: boolean;
+  };
+  editPhoneNumber: {
+    onEditPhoneNumber: (
+      oldData: { id: number; number: string },
+      newNumber: string
+    ) => void;
     data: any;
     loading: boolean;
   };
@@ -96,6 +113,17 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
     },
   });
 
+  const [insert_phone, addNewNumberToContact] = useMutation(
+    ADD_NUMBER_TO_CONTACT,
+    {
+      refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+    }
+  );
+
+  const [update_phone_by_pk, editPhoneNumber] = useMutation(EDIT_PHONE_NUMBER, {
+    refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+  });
+
   return {
     data: data?.contact,
     loading,
@@ -142,6 +170,33 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
       },
       data: updateContact.data,
       loading: updateContact.loading,
+    },
+    addNewNumber: {
+      onAddNewNumber: (id, number) => {
+        insert_phone({
+          variables: {
+            contact_id: id,
+            phone_number: number,
+          },
+        });
+      },
+      data: addNewNumberToContact.data,
+      loading: addNewNumberToContact.loading,
+    },
+    editPhoneNumber: {
+      onEditPhoneNumber: (oldData, newNumber) => {
+        update_phone_by_pk({
+          variables: {
+            pk_columns: {
+              number: oldData.number,
+              contact_id: oldData.id,
+            },
+            new_phone_number: newNumber,
+          },
+        });
+      },
+      data: editPhoneNumber.data,
+      loading: editPhoneNumber.loading,
     },
     resetState: () => {
       setIsComplete(false);

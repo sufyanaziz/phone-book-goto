@@ -101,7 +101,10 @@ const Contacts = () => {
           </div>
         </div>
       </Container>
-      <ModalDetail />
+      <ModalDetail
+        onAddNewNumber={rest.addNewNumber.onAddNewNumber}
+        onEditPhoneNumber={rest.editPhoneNumber.onEditPhoneNumber}
+      />
       <ModalAddContact
         loading={rest.addContact.loading}
         onAddNewContact={rest.addContact.onAddNewContact}

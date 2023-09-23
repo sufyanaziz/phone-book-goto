@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useContext, useState } from "react";
 import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
 import { GET_CONTACT_DETAIL } from "@common/graphql/contact";
-import useRoute from "@common/utils/useRoute";
+import useRoute from "@common/hooks/useRoute";
 import { MessageStore } from "@common/store/useMessageStore";
 
 const useFormContact = () => {
