@@ -95,6 +95,9 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
       setIsComplete(true);
       setShowMessage("successRemoveContact", true);
     },
+    onError: () => {
+      window.alert("Something went wrong, cant delete contact on server");
+    },
   });
 
   const [insert_contact, addNewContact] = useMutation(ADD_NEW_CONTACT, {
@@ -111,17 +114,26 @@ const useContact = ({ limit }: TUseContact): TDataContacts => {
       setIsComplete(true);
       setShowMessage("successEditContact", true);
     },
+    onError: () => {
+      window.alert("Something went wrong, cant edit contact on server");
+    },
   });
 
   const [insert_phone, addNewNumberToContact] = useMutation(
     ADD_NUMBER_TO_CONTACT,
     {
       refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+      onError: () => {
+        window.alert("Something went wrong, cant add phone number on server");
+      },
     }
   );
 
   const [update_phone_by_pk, editPhoneNumber] = useMutation(EDIT_PHONE_NUMBER, {
     refetchQueries: [GET_CONTACT, GET_COUNT_CONTACT],
+    onError: () => {
+      window.alert("Something went wrong, cant edit phone number on server");
+    },
   });
 
   return {

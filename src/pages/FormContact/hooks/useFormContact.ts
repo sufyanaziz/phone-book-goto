@@ -24,12 +24,18 @@ const useFormContact = () => {
       setIsSuccess(true);
       setShowMessage("successAddContact", true);
     },
+    onError: () => {
+      window.alert("Something went wrong, cant add contact on server");
+    },
   });
 
   const [update_contact_by_pk, updateContact] = useMutation(EDIT_CONTACT, {
     onCompleted: () => {
       setIsSuccess(true);
       setShowMessage("successEditContact", true);
+    },
+    onError: () => {
+      window.alert("Something went wrong, cant edit contact on server");
     },
   });
 
