@@ -1,13 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ADD_NEW_CONTACT, EDIT_CONTACT } from "@common/graphql/formContact";
 import { GET_CONTACT_DETAIL } from "@common/graphql/contact";
 import useRoute from "@common/utils/useRoute";
+import { MessageStore } from "@common/store/useMessageStore";
 
 const useFormContact = () => {
   const { queryUrl } = useRoute();
   const [isSuccess, setIsSuccess] = useState(false);
   const id = queryUrl.get("id");
+
+  const { setShowMessage } = useContext(MessageStore);
 
   const contactDetail = useQuery(GET_CONTACT_DETAIL, {
     skip: id ? false : true,
@@ -19,12 +22,14 @@ const useFormContact = () => {
   const [insert_contact, { data, ...rest }] = useMutation(ADD_NEW_CONTACT, {
     onCompleted: () => {
       setIsSuccess(true);
+      setShowMessage("successAddContact", true);
     },
   });
 
   const [update_contact_by_pk, updateContact] = useMutation(EDIT_CONTACT, {
     onCompleted: () => {
       setIsSuccess(true);
+      setShowMessage("successEditContact", true);
     },
   });
 
