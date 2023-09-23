@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component ModalEditContact should render ModalEditContact component correctly 1`] = `
+<div
+  css={[Function]}
+>
+  <div
+    className="modal-mask"
+    onClick={[Function]}
+  />
+  <div
+    className="modal-content"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className=""
+        css={[Function]}
+      >
+        Edit Contact
+      </div>
+      <div
+        className="close-icon"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          css={[Function]}
+        >
+          X
+        </div>
+      </div>
+    </div>
+    <div
+      className="content"
+    >
+      <div
+        css={[Function]}
+      >
+        <div
+          className="section-name"
+        >
+          <div
+            className="first-name"
+          >
+            <div
+              className="header-title"
+              css={[Function]}
+            >
+              First Name
+            </div>
+            <input
+              className="input"
+              disabled={false}
+              onChange={[Function]}
+              placeholder="Input First Name..."
+              value=""
+            />
+          </div>
+          <div
+            className="last-name"
+          >
+            <div
+              className="header-title"
+              css={[Function]}
+            >
+              Last Name
+            </div>
+            <input
+              className="input"
+              disabled={false}
+              onChange={[Function]}
+              placeholder="Input Last Name..."
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="section-phone-number"
+        >
+          <div
+            className="header-title"
+            css={[Function]}
+          >
+            Phones
+          </div>
+          <div
+            className="phone-container"
+          >
+            <input
+              className="input"
+              disabled={true}
+              onChange={[Function]}
+              placeholder="Phone 1"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    >
+      <div
+        className="flex"
+        css={
+          {
+            "padding": "0 12px 12px 12px",
+          }
+        }
+      >
+        <button
+          className="primary"
+          css={[Function]}
+          disabled={true}
+          onClick={[Function]}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

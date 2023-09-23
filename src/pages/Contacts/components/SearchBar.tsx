@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import { Theme, css } from "@emotion/react";
 import { ContactStore } from "@common/store/useContactStore";
 import Button from "@common/components/Button";
-import { useNavigate } from "react-router-dom";
+import { MODAL_NAME } from "../constant/modal";
 
 const SearchBar = () => {
-  const navigate = useNavigate();
   const searchBarStyle = (theme: Theme) => {
     return css({
       width: "100%",
@@ -19,7 +18,7 @@ const SearchBar = () => {
     });
   };
 
-  const { onSetSearch, search } = useContext(ContactStore);
+  const { onSetSearch, search, openModal } = useContext(ContactStore);
 
   return (
     <div css={searchBarStyle}>
@@ -32,7 +31,7 @@ const SearchBar = () => {
       <div>
         <Button
           label="Add New Contact"
-          onClick={() => navigate("/add-contact")}
+          onClick={() => openModal(MODAL_NAME.modalAddContact, {})}
         />
       </div>
     </div>

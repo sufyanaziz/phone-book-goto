@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import Loader from "@common/components/Loader";
 import Button from "@common/components/Button";
 import useContact from "./hooks/useContact";
@@ -8,13 +8,18 @@ import Container from "@common/components/Container";
 import HeaderTitle from "@common/components/HeaderTitle";
 import SearchBar from "./components/SearchBar";
 import { ContactStore } from "@common/store/useContactStore";
+import { useNavigate } from "react-router-dom";
+import ModalDetail from "./components/ModalDetail";
+import ModalAddContact from "./components/ModalAddContact";
+import ModalEditContact from "./components/ModalEditContact";
 import "./style/index.css";
 
 const LIMIT = 10;
 
 const Contacts = () => {
-  const { offset, onSetOffset } = useContext(ContactStore);
-  const { data, loading, totalRow } = useContact({ limit: LIMIT });
+  const navigate = useNavigate();
+  const { offset, onSetOffset, openModal } = useContext(ContactStore);
+  const { data, loading, totalRow, ...rest } = useContact({ limit: LIMIT });
 
   const pagination = useMemo(() => {
     return {
@@ -26,11 +31,33 @@ const Contacts = () => {
     };
   }, [data, offset, totalRow]);
 
+  useEffect(() => {
+    rest.refetchContact();
+    rest.refetchContactAggregate();
+  }, []);
+
   const renderData = useCallback(() => {
     if (loading) return <Loader />;
     if (!data?.length) return <Text text="Data is not found" />;
     return data.map((item) => {
-      return <CardContact key={item.id} data={item} />;
+      return (
+        <CardContact
+          key={item.id}
+          data={item}
+          onEdit={(data) => {
+            navigate(`/form?id=${data.id}`);
+          }}
+          onDelete={(data) => {
+            const confirm = window.confirm(`delete ${data.first_name}`);
+            if (confirm) {
+              rest.deleteContact.onDeleteContact(data.id);
+            }
+          }}
+          onDetail={(contact) => {
+            openModal("modal-detail-contact", contact);
+          }}
+        />
+      );
     });
   }, [data, loading]);
 
@@ -72,6 +99,19 @@ const Contacts = () => {
           </div>
         </div>
       </Container>
+      <ModalDetail />
+      <ModalAddContact
+        loading={rest.addContact.loading}
+        onAddNewContact={rest.addContact.onAddNewContact}
+        onClose={rest.resetState}
+        isComplete={rest.isComplete}
+      />
+      <ModalEditContact
+        loading={rest.editContact.loading}
+        onEditContact={rest.editContact.onEditContact}
+        onClose={rest.resetState}
+        isComplete={rest.isComplete}
+      />
     </div>
   );
 };

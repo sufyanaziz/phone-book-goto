@@ -3,6 +3,7 @@ import { ContactProvider } from "@common/store/useContactStore";
 import { Theme, ThemeProvider } from "@emotion/react";
 import Contacts from "@pages/Contacts";
 import { Route, Routes } from "react-router-dom";
+import FormContact from "@pages/FormContact";
 import "@styles/index.css";
 
 const theme: Theme = {
@@ -26,6 +27,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Contacts />} />
+            <Route path="/form" element={<FormContact />} />
           </Routes>
         </div>
       </ContactProvider>

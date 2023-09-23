@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component ModalDetail should render ModalDetail component correctly 1`] = `
+<div
+  css={[Function]}
+>
+  <div
+    className="modal-mask"
+    onClick={[Function]}
+  />
+  <div
+    className="modal-content"
+  >
+    <div
+      className="header"
+    >
+      <div
+        css={
+          {
+            "alignItems": "center",
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="header-title"
+          css={[Function]}
+        >
+          Detail Contact
+        </div>
+        <div
+          css={
+            {
+              "marginLeft": "8px",
+            }
+          }
+        >
+          <button
+            className="warning"
+            css={[Function]}
+            onClick={[Function]}
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+      <div
+        className="close-icon"
+        onClick={[Function]}
+      >
+        <div
+          className=""
+          css={[Function]}
+        >
+          X
+        </div>
+      </div>
+    </div>
+    <div
+      className="content"
+    >
+      <div
+        css={[Function]}
+      >
+        <div
+          className="section-name"
+        >
+          <div
+            className="first-name"
+          >
+            <div
+              className="header-title"
+              css={[Function]}
+            >
+              First Name
+            </div>
+            <div
+              className=""
+              css={[Function]}
+            >
+              test 123
+            </div>
+          </div>
+          <div
+            className="last-name"
+          >
+            <div
+              className="header-title"
+              css={[Function]}
+            >
+              Last Name
+            </div>
+            <div
+              className=""
+              css={[Function]}
+            >
+              last 1234
+            </div>
+          </div>
+        </div>
+        <div
+          className="section-phone-number"
+        >
+          <div
+            className="header-title"
+            css={[Function]}
+          >
+            Phones
+          </div>
+          <div
+            className="phone"
+            css={[Function]}
+          >
+            6785421
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="footer"
+    />
+  </div>
+</div>
+`;
