@@ -39,8 +39,11 @@ const CardContact: React.FC<TCardContact> = ({ data, ...rest }) => {
   return (
     <div css={cardContentStyle}>
       <div className="card-content-info">
-        <Text text={`${data.first_name} ${data.last_name}`} type="bold" />
-        <Text text={data.phones[0].number} />
+        <Text
+          text={`${data.first_name} ${data?.last_name || ""}`}
+          type="bold"
+        />
+        <Text text={data.phones?.[0]?.number} />
       </div>
       <div className="card-content-action">
         <Button
